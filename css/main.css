@@ -1,0 +1,81 @@
+/* This CSS is just for structuring configurations of the page */ 
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-calculator {
+    width: 350px;
+    height: 500px;
+    display: flex;
+    padding: 20px 30px;
+    flex-flow: row wrap;
+    align-items: flex-start; 
+}
+
+.display {
+    flex-basis: 100%;
+    height: 145px;
+    margin-bottom: 15px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.container-numbers {
+    flex-grow: 3;
+    height: 300px;
+    display: flex;
+    box-sizing: border-box;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-numbers-conjunt {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    margin-top: 15px;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.btn-numbers-conjunt-exclused {
+    justify-content: center;
+}
+
+.btn-number {
+    width: 30%;
+}
+
+.container-btn-ops {
+    flex-grow: 2;
+    height: 300px;
+    display: flex;
+    margin-left: 10px;
+    box-sizing: border-box;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.btn-op-conjunt {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.btn-op {
+    flex-grow: 1;
+    margin-top: 15px;
+}
