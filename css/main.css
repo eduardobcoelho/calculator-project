@@ -61,15 +61,11 @@
     justify-content: space-between;
 }
 
-.btn-numbers-conjunt-exclused {
-    justify-content: center;
-}
-
 .btn-number {
     width: 30%;
 }
 
-.container-btn-ops {
+.container-ops {
     flex-grow: 2;
     height: 300px;
     display: flex;
