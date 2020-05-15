@@ -25,11 +25,10 @@ body {
 .display {
     background-color: white;
     box-shadow: 2px 2px 8px #000;
+    list-style-type: none;
 }
 
 .clearfix {
-    width: 100%;
-    display: block;
     border: 0.5px solid #747171;
 }
 

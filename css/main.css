@@ -14,11 +14,6 @@
     align-items: center;
 }
 
-.themme {
-    align-self: flex-start;
-    margin-top: 15px;
-}
-
 .container-calculator {
     width: 350px;
     height: 500px;
@@ -31,9 +26,19 @@
 .display {
     flex-basis: 100%;
     height: 145px;
+    display: flex;
     margin-bottom: 15px;
     padding: 30px;
     box-sizing: border-box;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.clearfix {
+    width: 100%;
+    display: block;;
 }
 
 .container-numbers {
@@ -75,6 +80,7 @@
 }
 
 .btn-op-conjunt {
+    flex-basis: 45%;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
