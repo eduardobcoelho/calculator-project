@@ -19,22 +19,22 @@
 
             <div class="container-numbers">
                 <div class="btn-numbers-conjunt">
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="1">1</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="2">2</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="3">3</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="1">1</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="2">2</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="3">3</button>
                 </div>
                 <div class="btn-numbers-conjunt">
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="4">4</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="5">5</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="6">6</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="4">4</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="5">5</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="6">6</button>
                 </div>
                 <div class="btn-numbers-conjunt">
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="7">7</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="8">8</button>
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="9">9</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="7">7</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="8">8</button>
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="9">9</button>
                 </div>
                 <div class="btn-numbers-conjunt" style="justify-content: center;">
-                    <button onclick="showNumber(this)" class="btn-number btn-style" value="0"
+                    <button onclick="checkDisplay();showNumber(this)" class="btn-number btn-style" value="0"
                         style="width: 100%;">0</button>
                 </div>
             </div>
@@ -43,12 +43,15 @@
                 <div class="btn-op-conjunt">
                     <button onclick="showOp(this);transformNumber()" class="btn-op btn-style" value="+">+</button>
                     <button onclick="showOp(this);transformNumber()" class="btn-op btn-style" value="-">-</button>
-                    <button onclick="showOp(this);transformNumber()" class="btn-op btn-style" value="*">*</button>
+                    <button onclick="showOp(this);transformNumber()" class="btn-op btn-style" value="x">x</button>
                     <button onclick="showOp(this);transformNumber()" class="btn-op btn-style" value="/">/</button>
                 </div>
                 <div class="btn-op-conjunt">
-                    <button onclick="showOp(this)" class="btn-op btn-style" value="="
-                        style="background-color: #ed6507;">=</button>
+                    <button onclick="cleanDisplay()" class="btn-op btn-style btn-action-style" value="C"
+                        style="background-color: #5007ed;">C</button>
+                    <button onclick="showOp(this);transformNumber();doOperation(this)"
+                        class="btn-op btn-style btn-action-style" value="="
+                        style="background-color: #e63819;">=</button>
                 </div>
             </div>
 
