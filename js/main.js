@@ -1,3 +1,7 @@
+// alert
+
+window.alert("This calculator just do math operations with two numbers!! Welcome and make a good use!!");
+
 // Global variables
 
 var i = 0; // index
@@ -30,7 +34,7 @@ function transformNumber(){ // function used to take the array numbersClicked nu
         transformedNumber = transformedNumber + numbersClicked[i]; // concatenating the elements of numbersClicked array
     }
 
-    arrayNumbers.push(Number.parseInt(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
+    arrayNumbers.push(Number(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
     numbersClicked = [] // reseting numbersClicked array
 }
 
