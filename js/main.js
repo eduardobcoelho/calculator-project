@@ -15,6 +15,8 @@ var numbersClicked = []; // array used to store the number clicked; it will be u
 var arrayNumbers = []; // array used to store the concatenation result of the function transformNumber
 
 var arrayOperation = []; // array used to store the last operation button clicked; it will be used in the doOperation() function
+
+var opCalc = null; // variable used to store the math operation value
  
 function showNumber(numValue){ // function used to show on display the last number button value clicked
 
@@ -28,25 +30,32 @@ function showNumber(numValue){ // function used to show on display the last numb
 
 function transformNumber(){ // function used to take the array numbersClicked numbers and transform in one number and store into arrayNumbers 
 
-    let transformedNumber = ""; // variable used to concatenate the numbers
+    if(numbersClicked[0] != undefined){ // check if has numbers in the numbersClicked to transform
+        
+        let transformedNumber = ""; // variable used to concatenate the numbers
 
-    for (i = 0; i<numbersClicked.length; i++){ // "for" used to take all the elements of numbersClicked array 
-        transformedNumber = transformedNumber + numbersClicked[i]; // concatenating the elements of numbersClicked array
-    }
+        for (i = 0; i<numbersClicked.length; i++){ // "for" used to take all the elements of numbersClicked array 
+            transformedNumber = transformedNumber + numbersClicked[i]; // concatenating the elements of numbersClicked array
+        }
 
-    arrayNumbers.push(Number(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
-    numbersClicked = [] // reseting numbersClicked array
+        arrayNumbers.push(Number(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
+        numbersClicked = [] // reseting numbersClicked array
+    } else {}
 }
 
 function showOp(opValue){ // function used to show on display the last operation button value clicked
 
-    let storeValue = String(opValue.value); // stores in a variable the value of the last button clicked
+    if(arrayOperation[0] == undefined){ // check if has an operation in queue
 
-    arrayOperation.push(storeValue); // stores in an array the value of the last operation button value clicked
+        let storeValue = String(opValue.value); // stores in a variable the value of the last button clicked
 
-    display.append(" ");
-    display.insertAdjacentHTML("beforeend", storeValue); // insert in the end of the display div the last operation button value clicked
-    display.append(" ");
+        arrayOperation.push(storeValue); // stores in an array the value of the last operation button value clicked
+    
+        display.append(" ");
+        display.insertAdjacentHTML("beforeend", storeValue); // insert in the end of the display div the last operation button value clicked
+        display.append(" ");
+    
+    } else {}
 
 }
 
@@ -54,9 +63,7 @@ function doOperation(result){ // function used to do the math operations
 
     let resultValue = String(result.value);
 
-    let opCalc; // stores the math operation value
-
-    if(arrayOperation.length > 0){ // check if exist an operation to do
+    if(arrayOperation.length > 0 && opCalc == null){ // check if exist an operation to do and if has any operation in queue
 
         switch(arrayOperation[0]){
             case "+":
@@ -91,11 +98,12 @@ function checkDisplay(){ // check if an operation between two numbers has been d
 
     if(resultClicked>0){
 
-        // reseting arrays
+        // reseting
 
         numbersClicked = [];
         arrayNumbers = [];
         arrayOperation = [];
+        opCalc = null;
 
         // a way to remove the children if they are li
 
@@ -117,11 +125,12 @@ function checkDisplay(){ // check if an operation between two numbers has been d
 
 function cleanDisplay(){ // clean the display information;
 
-    // reseting arrays
+    // reseting
 
     numbersClicked - [];
     arrayNumbers = [];
     arrayOperation = [];
+    opCalc = null;
 
     // removing display children
 
@@ -131,3 +140,5 @@ function cleanDisplay(){ // clean the display information;
     resultClicked = 0;
 
 }
+
+// tests
