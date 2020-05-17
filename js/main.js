@@ -1,68 +1,82 @@
-// alert
-
 window.alert("This calculator just do math operations with two numbers!! Welcome and make a good use!!");
 
-// Global variables
-
-var i = 0; // index
+var i = 0;
 
 var equalClicked = 0;
 
-var display = document.querySelector(".display"); // display div HTML element
+var display = document.querySelector(".display");
 
-var numbersClicked = []; // array used to store the number clicked; it will be used to concatenate numbers latelly
+var numbersClicked = [];
 
-var arrayNumbers = []; // array used to store the concatenation result of the function transformNumber
+var arrayNumbers = [];
 
-var arrayOperation = []; // array used to store the last operation button clicked; it will be used in the doOperation() function
+var arrayOperation = [];
 
-var opCalc = null; // variable used to store the math operation value
+var opCalc = null;
 
-function showNumber(numValue) { // function used to show on display the last number button value clicked
+function showNumber(numValue) {
 
-    let storeValue = numValue.value; // stores in a variable the value of the last button clicked
+    let storeValue = numValue.value;
 
-    numbersClicked.push(storeValue); // stores in the array next position the value of the last button clicked
+    numbersClicked.push(storeValue);
 
-    display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + numbersClicked[(numbersClicked.length) - 1] + "</li>"); // insert at the end of the display div the last button clicked
+    display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + numbersClicked[(numbersClicked.length) - 1] + "</li>");
 
 }
 
-function transformNumber() { // function used to take the array numbersClicked numbers and transform in one number and store into arrayNumbers 
+function transformNumber() {
 
-    if (numbersClicked[0] != undefined) { // check if has numbers in the numbersClicked to transform
+    if (numbersClicked[0] != undefined) {
 
-        let transformedNumber = ""; // variable used to concatenate the numbers
+        let transformedNumber = "";
 
-        for (i = 0; i < numbersClicked.length; i++) { // "for" used to take all the elements of numbersClicked array 
-            transformedNumber = transformedNumber + numbersClicked[i]; // concatenating the elements of numbersClicked array
+        for (i = 0; i < numbersClicked.length; i++) {
+
+            transformedNumber = transformedNumber + numbersClicked[i];
+
         }
 
-        arrayNumbers.push(Number(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
-        numbersClicked = [] // reseting numbersClicked array
+        arrayNumbers.push(Number(transformedNumber));
 
     } else { }
 }
 
-function showOp(opValue) { // function used to show on display the last operation button value clicked
+function removeAndAdd() {
 
-    if (arrayOperation[0] == undefined) { // check if has an operation in queue
+    for (i = 0; i < numbersClicked.length; i++) {
 
-        let storeValue = String(opValue.value); // stores in a variable the value of the last button clicked
+        let displayChildren = display.querySelectorAll("li");
 
-        arrayOperation.push(storeValue); // stores in an array the value of the last operation button value clicked
+        let lastChild = displayChildren[displayChildren.length - 1];
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin display-op'>" + storeValue + "</li>"); // insert in the end of the display div the last operation button value clicked
+        display.removeChild(lastChild);
+    }
+
+    numbersClicked = [];
+
+    display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "<li>");
+
+}
+
+function showOp(opValue) {
+
+    if (arrayOperation[0] == undefined) {
+
+        let storeValue = String(opValue.value);
+
+        arrayOperation.push(storeValue);
+
+        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin display-op'>" + storeValue + "</li>");
 
     } else { }
 
 }
 
-function doOperation(equal) { // function used to do the math operations
+function doOperation(equal) {
 
     let equalValue = String(equal.value);
 
-    if (arrayOperation.length > 0 && arrayNumbers[1] != undefined && opCalc == null) { // check if exist an operation to do and if has any operation in queue
+    if (arrayOperation.length > 0 && arrayNumbers[1] != undefined && opCalc == null) {
 
         switch (arrayOperation[0]) {
             case "+":
@@ -83,15 +97,15 @@ function doOperation(equal) { // function used to do the math operations
 
         display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin display-equal'>" + equalValue + "</li>");
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-result'>" + opCalc + "</li>"); // insert in the end of the display div the math operation value
+        display.insertAdjacentHTML("beforeend", "<li class='display-element display-result'>" + opCalc + "</li>");
 
-        equalClicked += 1; // add 1 in equalClicked to do the verifications in checkDisplay()
+        equalClicked += 1;
 
     } else { }
 
 }
 
-function checkDisplay() { // check if an operation between two numbers has been done
+function checkDisplay() {
 
     if (equalClicked > 0) {
 
@@ -116,7 +130,7 @@ function checkDisplay() { // check if an operation between two numbers has been 
 
 }
 
-function cleanDisplay() { // clean the display information;
+function cleanDisplay() {
 
     // reseting
 
@@ -138,7 +152,7 @@ function cleanDisplay() { // clean the display information;
 
 }
 
-function cleanLastChild() { // removes the last display element
+function cleanLastChild() {
 
     let displayChildren = display.querySelectorAll("li");
 
@@ -156,7 +170,11 @@ function cleanLastChild() { // removes the last display element
 
             for (i = 0; i < displayChildren.length; i++) {
 
-                display.removeChild(displayChildren[i]);
+                let displayChildren = display.querySelectorAll("li");
+
+                let lastChild = displayChildren[(displayChildren.length) - 1];
+
+                display.removeChild(lastChild);
 
             }
 
