@@ -144,13 +144,23 @@ function cleanLastChild() { // removes the last display element
 
     let lastChild = displayChildren[(displayChildren.length) - 1];
 
-    if (opCalc == null) {
+    if (opCalc == null && displayChildren[0] != undefined) {
 
         if (arrayOperation[0] != undefined && numbersClicked[0] == undefined) {
 
             arrayOperation.pop();
 
             display.removeChild(lastChild);
+
+        } else if (arrayOperation[0] == undefined && numbersClicked[0] == undefined && arrayNumbers[0] != undefined) {
+
+            for (i = 0; i < displayChildren.length; i++) {
+
+                display.removeChild(displayChildren[i]);
+
+            }
+
+            arrayNumbers = [];
 
         } else {
 
