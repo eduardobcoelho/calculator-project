@@ -82,7 +82,7 @@
 .btn-op-conjunt {
     flex-basis: 45%;
     display: flex;
-    flex-flow: column;
+    flex-flow: column wrap;
     justify-content: space-between;
 }
 

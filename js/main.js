@@ -24,7 +24,7 @@ function showNumber(numValue){ // function used to show on display the last numb
 
     numbersClicked.push(storeValue); // stores in the array next position the value of the last button clicked
 
-    display.insertAdjacentHTML("beforeend", numbersClicked[(numbersClicked.length)-1]); // insert at the end of the display div the last button clicked
+    display.insertAdjacentHTML("beforeend", "<li class='display-element'>" + numbersClicked[(numbersClicked.length)-1] + "</li>"); // insert at the end of the display div the last button clicked
 
 }
 
@@ -40,6 +40,7 @@ function transformNumber(){ // function used to take the array numbersClicked nu
 
         arrayNumbers.push(Number(transformedNumber)); // pushing inside of the arrayNumbers the concatenated element(transformedNumber) in number form
         numbersClicked = [] // reseting numbersClicked array
+
     } else {}
 }
 
@@ -51,9 +52,7 @@ function showOp(opValue){ // function used to show on display the last operation
 
         arrayOperation.push(storeValue); // stores in an array the value of the last operation button value clicked
     
-        display.append(" ");
-        display.insertAdjacentHTML("beforeend", storeValue); // insert in the end of the display div the last operation button value clicked
-        display.append(" ");
+        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin'>" + storeValue + "</li>"); // insert in the end of the display div the last operation button value clicked
     
     } else {}
 
@@ -63,7 +62,7 @@ function doOperation(result){ // function used to do the math operations
 
     let resultValue = String(result.value);
 
-    if(arrayOperation.length > 0 && opCalc == null){ // check if exist an operation to do and if has any operation in queue
+    if(arrayOperation.length > 0 && arrayNumbers[1] != undefined && opCalc == null){ // check if exist an operation to do and if has any operation in queue
 
         switch(arrayOperation[0]){
             case "+":
@@ -83,10 +82,10 @@ function doOperation(result){ // function used to do the math operations
         }
 
         display.append(" ");
-        display.insertAdjacentHTML("beforeend", resultValue);
+        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin'>" + resultValue + "</li>");
         display.append(" ");
     
-        display.insertAdjacentHTML("beforeend", opCalc); // insert in the end of the display div the math operation value
+        display.insertAdjacentHTML("beforeend", "<li class='display-element'>" + opCalc + "</li>"); // insert in the end of the display div the math operation value
     
         resultClicked += 1; // add 1 in resultClicked to do the verifications in checkDisplay()
 
@@ -105,16 +104,12 @@ function checkDisplay(){ // check if an operation between two numbers has been d
         arrayOperation = [];
         opCalc = null;
 
-        // a way to remove the children if they are li
-
-        /* let displayChildren = display.querySelectorAll("li");
-        for(i = 0; i<displayChildren.length; i++){
-            display.removeChild(displayChildren[i]);
-        } */
-
         // removing display children
 
-        display.innerHTML = "";
+        let displayChildren = display.querySelectorAll("li");
+        for(i = 0; i<displayChildren.length; i++){
+            display.removeChild(displayChildren[i]);
+        }
 
         // reseting
         resultClicked = 0;
@@ -122,6 +117,14 @@ function checkDisplay(){ // check if an operation between two numbers has been d
     } else {}
 
 }
+
+/* function cleanLastChild(){
+
+    let displayChildren = display.querySelectorAll("li");
+
+    display.removeChild(displayChildren[(displayChildren.length) - 1])
+
+} */ 
 
 function cleanDisplay(){ // clean the display information;
 
@@ -134,9 +137,13 @@ function cleanDisplay(){ // clean the display information;
 
     // removing display children
 
-    display.innerHTML = "";
+    let displayChildren = display.querySelectorAll("li");
+    for(i = 0; i<displayChildren.length; i++){
+        display.removeChild(displayChildren[i]);
+    }
 
     // reseting
+
     resultClicked = 0;
 
 }
