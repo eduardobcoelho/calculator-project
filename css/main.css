@@ -36,10 +36,6 @@
     align-content: flex-end;
 }
 
-.display li {
-    list-style-type: none;
-}
-
 .clearfix {
     width: 100%;
     display: block;;

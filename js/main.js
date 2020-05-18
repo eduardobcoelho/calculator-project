@@ -6,7 +6,7 @@ var i = 0, equalClicked = 0, opCalc = null;
 
 var numbersClicked = [], arrayNumbers = [], arrayOperation = [];
 
-var displayChildren = display.querySelectorAll("li"), lastChild = displayChildren[displayChildren.length - 1];
+var displayChildren = display.querySelectorAll(".display-element"), lastChild = displayChildren[displayChildren.length - 1];
 
 // shows in display the number button value
 function showNumber(numValue) {
@@ -15,7 +15,7 @@ function showNumber(numValue) {
 
     numbersClicked.push(storeValue);
 
-    display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + numbersClicked[(numbersClicked.length) - 1] + "</li>");
+    display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numbersClicked[(numbersClicked.length) - 1] + "</div>");
 
 }
 
@@ -44,7 +44,7 @@ function removeAndAdd() {
 
         for (i = 0; i < numbersClicked.length; i++) {
 
-            displayChildren = display.querySelectorAll("li");
+            displayChildren = display.querySelectorAll(".display-element");
 
             lastChild = displayChildren[displayChildren.length - 1];
             
@@ -54,13 +54,9 @@ function removeAndAdd() {
 
         numbersClicked = [];
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "<li>");
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "</div>");
 
-        displayChildren = display.querySelectorAll("li");
-
-        lastChild = displayChildren[displayChildren.length - 1];
-
-        display.removeChild(lastChild);
+        displayChildren = display.querySelectorAll(".display-element");
 
     }
 
@@ -75,7 +71,7 @@ function showOp(opValue) {
 
         arrayOperation.push(storeValue);
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin display-op'>" + storeValue + "</li>");
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-op'>" + storeValue + "</div>");
 
     } else { }
 
@@ -105,9 +101,9 @@ function doOperation(equal) {
                 break;
         }
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-element-margin display-equal'>" + equalValue + "</li>");
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-equal'>" + equalValue + "</div>");
 
-        display.insertAdjacentHTML("beforeend", "<li class='display-element display-result'>" + opCalc + "</li>");
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-result'>" + opCalc + "</div>");
 
         equalClicked += 1;
 
@@ -129,7 +125,7 @@ function checkDisplay() {
 
         // removing display children
 
-        displayChildren = display.querySelectorAll("li");
+        displayChildren = display.querySelectorAll(".display-element");
         for (i = 0; i < displayChildren.length; i++) {
             display.removeChild(displayChildren[i]);
         }
@@ -153,7 +149,7 @@ function cleanDisplay() {
 
     // removing display children
 
-    displayChildren = display.querySelectorAll("li");
+    displayChildren = display.querySelectorAll(".display-element");
     for (i = 0; i < displayChildren.length; i++) {
         display.removeChild(displayChildren[i]);
     }
@@ -167,7 +163,7 @@ function cleanDisplay() {
 // removes of the display the last number or operation clicked
 function cleanLastChild() {
 
-    displayChildren = display.querySelectorAll("li");
+    displayChildren = display.querySelectorAll(".display-element");
 
     lastChild = displayChildren[(displayChildren.length) - 1];
 
@@ -183,9 +179,7 @@ function cleanLastChild() {
 
             for (i = 0; i < displayChildren.length; i++) {
 
-                displayChildren = display.querySelectorAll("li");
-
-                lastChild = displayChildren[(displayChildren.length) - 1];
+                arrayNumbers.pop();
 
                 display.removeChild(lastChild);
 
