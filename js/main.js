@@ -6,6 +6,7 @@ var i = 0, equalClicked = 0, opCalc = null;
 
 var numbersClicked = [], arrayNumbers = [], arrayOperation = [];
 
+// shows in display the number button value
 function showNumber(numValue) {
 
     let storeValue = numValue.value;
@@ -16,6 +17,7 @@ function showNumber(numValue) {
 
 }
 
+// transform the numbersClicked in just one number 
 function transformNumber() {
 
     if (numbersClicked[0] != undefined) {
@@ -33,6 +35,7 @@ function transformNumber() {
     } else { }
 }
 
+// remove all the individual number list items and add the transformedNumber
 function removeAndAdd() {
 
     if (numbersClicked[0] != undefined) {
@@ -55,6 +58,7 @@ function removeAndAdd() {
 
 }
 
+// shows in display the operation button value
 function showOp(opValue) {
 
     if (arrayOperation[0] == undefined) {
@@ -69,6 +73,7 @@ function showOp(opValue) {
 
 }
 
+// do the calculation of the operation selected
 function doOperation(equal) {
 
     let equalValue = String(equal.value);
@@ -102,6 +107,7 @@ function doOperation(equal) {
 
 }
 
+// checks if an operation has been done before start a new operation
 function checkDisplay() {
 
     if (equalClicked > 0) {
@@ -127,6 +133,7 @@ function checkDisplay() {
 
 }
 
+// clean all the display
 function cleanDisplay() {
 
     // reseting
@@ -149,6 +156,7 @@ function cleanDisplay() {
 
 }
 
+// removes of the display the last number or operation clicked
 function cleanLastChild() {
 
     let displayChildren = display.querySelectorAll("li");
