@@ -1,18 +1,10 @@
 window.alert("This calculator just do math operations with two numbers!! Welcome and make a good use!!");
 
-var i = 0;
-
-var equalClicked = 0;
-
 var display = document.querySelector(".display");
 
-var numbersClicked = [];
+var i = 0, equalClicked = 0, opCalc = null;
 
-var arrayNumbers = [];
-
-var arrayOperation = [];
-
-var opCalc = null;
+var numbersClicked = [], arrayNumbers = [], arrayOperation = [];
 
 function showNumber(numValue) {
 
@@ -43,18 +35,23 @@ function transformNumber() {
 
 function removeAndAdd() {
 
-    for (i = 0; i < numbersClicked.length; i++) {
+    if (numbersClicked[0] != undefined) {
 
-        let displayChildren = display.querySelectorAll("li");
+        for (i = 0; i < numbersClicked.length; i++) {
 
-        let lastChild = displayChildren[displayChildren.length - 1];
+            let displayChildren = display.querySelectorAll("li");
 
-        display.removeChild(lastChild);
+            let lastChild = displayChildren[displayChildren.length - 1];
+
+            display.removeChild(lastChild);
+
+        }
+
+        numbersClicked = [];
+
+        display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "<li>");
+
     }
-
-    numbersClicked = [];
-
-    display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "<li>");
 
 }
 
