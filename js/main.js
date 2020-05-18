@@ -6,6 +6,8 @@ var i = 0, equalClicked = 0, opCalc = null;
 
 var numbersClicked = [], arrayNumbers = [], arrayOperation = [];
 
+var displayChildren = display.querySelectorAll("li"), lastChild = displayChildren[displayChildren.length - 1];
+
 // shows in display the number button value
 function showNumber(numValue) {
 
@@ -42,10 +44,10 @@ function removeAndAdd() {
 
         for (i = 0; i < numbersClicked.length; i++) {
 
-            let displayChildren = display.querySelectorAll("li");
+            displayChildren = display.querySelectorAll("li");
 
-            let lastChild = displayChildren[displayChildren.length - 1];
-
+            lastChild = displayChildren[displayChildren.length - 1];
+            
             display.removeChild(lastChild);
 
         }
@@ -53,6 +55,12 @@ function removeAndAdd() {
         numbersClicked = [];
 
         display.insertAdjacentHTML("beforeend", "<li class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "<li>");
+
+        displayChildren = display.querySelectorAll("li");
+
+        lastChild = displayChildren[displayChildren.length - 1];
+
+        display.removeChild(lastChild);
 
     }
 
@@ -121,7 +129,7 @@ function checkDisplay() {
 
         // removing display children
 
-        let displayChildren = display.querySelectorAll("li");
+        displayChildren = display.querySelectorAll("li");
         for (i = 0; i < displayChildren.length; i++) {
             display.removeChild(displayChildren[i]);
         }
@@ -145,7 +153,7 @@ function cleanDisplay() {
 
     // removing display children
 
-    let displayChildren = display.querySelectorAll("li");
+    displayChildren = display.querySelectorAll("li");
     for (i = 0; i < displayChildren.length; i++) {
         display.removeChild(displayChildren[i]);
     }
@@ -159,9 +167,9 @@ function cleanDisplay() {
 // removes of the display the last number or operation clicked
 function cleanLastChild() {
 
-    let displayChildren = display.querySelectorAll("li");
+    displayChildren = display.querySelectorAll("li");
 
-    let lastChild = displayChildren[(displayChildren.length) - 1];
+    lastChild = displayChildren[(displayChildren.length) - 1];
 
     if (opCalc == null && displayChildren[0] != undefined) {
 
@@ -175,9 +183,9 @@ function cleanLastChild() {
 
             for (i = 0; i < displayChildren.length; i++) {
 
-                let displayChildren = display.querySelectorAll("li");
+                displayChildren = display.querySelectorAll("li");
 
-                let lastChild = displayChildren[(displayChildren.length) - 1];
+                lastChild = displayChildren[(displayChildren.length) - 1];
 
                 display.removeChild(lastChild);
 
