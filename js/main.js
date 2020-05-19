@@ -4,7 +4,7 @@ var display = document.querySelector(".display");
 
 var i = 0, equalClicked = 0, opCalc = null;
 
-var numbersClicked = [], arrayNumbers = [], arrayOperation = [];
+var numberForOp = ""; arrayNumbers = [], arrayOperation = [];
 
 var displayChildren = display.querySelectorAll(".display-element"), lastChild = displayChildren[displayChildren.length - 1];
 
@@ -13,59 +13,35 @@ function showNumber(numValue) {
 
     let storeValue = numValue.value;
 
-    numbersClicked.push(storeValue);
+    numberForOp += storeValue;
 
-    display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numbersClicked[(numbersClicked.length) - 1] + "</div>");
-
-}
-
-// transform the numbersClicked in just one number 
-function transformNumber() {
-
-    if (numbersClicked[0] != undefined) {
-
-        let transformedNumber = "";
-
-        for (i = 0; i < numbersClicked.length; i++) {
-
-            transformedNumber = transformedNumber + numbersClicked[i];
-
-        }
-
-        arrayNumbers.push(Number(transformedNumber));
-
-    } else { }
-}
-
-// remove all the individual number list items and add the transformedNumber
-function removeAndAdd() {
-
-    if (numbersClicked[0] != undefined) {
-
-        for (i = 0; i < numbersClicked.length; i++) {
-
-            displayChildren = display.querySelectorAll(".display-element");
-
-            lastChild = displayChildren[displayChildren.length - 1];
-            
-            display.removeChild(lastChild);
-
-        }
-
-        numbersClicked = [];
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "</div>");
-
-        displayChildren = display.querySelectorAll(".display-element");
-
-    }
+    display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + storeValue + "</div>");
 
 }
 
-// shows in display the operation button value
+
+// shows in display the operation button value the realocation of the display divs
 function showOp(opValue) {
 
-    if (arrayOperation[0] == undefined) {
+    if (arrayOperation[0] == undefined && numberForOp != "") {
+
+        if (numberForOp != undefined) {
+
+            displayChildren = display.querySelectorAll(".display-number");
+
+            for (i = displayChildren.length - 1; i >= 0; i--) {
+
+                display.removeChild(displayChildren[i]);
+
+            }
+
+            arrayNumbers.push(Number(numberForOp));
+
+            display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numberForOp + "</div>");
+
+        }
+
+        numberForOp = "";
 
         let storeValue = String(opValue.value);
 
@@ -77,10 +53,28 @@ function showOp(opValue) {
 
 }
 
-// do the calculation of the operation selected
+// do the calculation of the operation selected and the realocation of the display divs
 function doOperation(equal) {
 
     let equalValue = String(equal.value);
+
+    if (numberForOp != undefined) {
+
+        displayChildren = display.querySelectorAll(".display-number");
+
+        for (i = displayChildren.length - 1; i > 0; i--) {
+
+            display.removeChild(displayChildren[i]);
+
+        }
+
+        arrayNumbers.push(Number(numberForOp));
+
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numberForOp + "</div>");
+
+        numberForOp = "";
+
+    }
 
     if (arrayOperation.length > 0 && arrayNumbers[1] != undefined && opCalc == null) {
 
@@ -118,7 +112,7 @@ function checkDisplay() {
 
         // reseting
 
-        numbersClicked = [];
+        numberForOp = "";
         arrayNumbers = [];
         arrayOperation = [];
         opCalc = null;
@@ -126,8 +120,11 @@ function checkDisplay() {
         // removing display children
 
         displayChildren = display.querySelectorAll(".display-element");
+
         for (i = 0; i < displayChildren.length; i++) {
+
             display.removeChild(displayChildren[i]);
+
         }
 
         // reseting
@@ -142,7 +139,7 @@ function cleanDisplay() {
 
     // reseting
 
-    numbersClicked - [];
+    numberForOp = "";
     arrayNumbers = [];
     arrayOperation = [];
     opCalc = null;
@@ -150,8 +147,11 @@ function cleanDisplay() {
     // removing display children
 
     displayChildren = display.querySelectorAll(".display-element");
+
     for (i = 0; i < displayChildren.length; i++) {
+
         display.removeChild(displayChildren[i]);
+
     }
 
     // reseting
@@ -167,29 +167,23 @@ function cleanLastChild() {
 
     lastChild = displayChildren[(displayChildren.length) - 1];
 
-    if (opCalc == null && displayChildren[0] != undefined) {
+    if (opCalc == null && lastChild != undefined) {
 
-        if (arrayOperation[0] != undefined && numbersClicked[0] == undefined) {
+        if (numberForOp != undefined && arrayNumbers[0] == undefined && arrayOperation[0] == undefined) {
 
-            arrayOperation.pop();
+            numberForOp = numberForOp.substr(0, (numberForOp.length - 1));
 
             display.removeChild(lastChild);
 
-        } else if (arrayOperation[0] == undefined && numbersClicked[0] == undefined && arrayNumbers[0] != undefined) {
+        } else if (numberForOp == "" && arrayNumbers[0] != undefined && arrayOperation[0] != undefined) {
 
-            for (i = 0; i < displayChildren.length; i++) {
+            arrayOperation = [];
 
-                arrayNumbers.pop();
+            display.removeChild(lastChild);
 
-                display.removeChild(lastChild);
-
-            }
+        } else if (numberForOp == "" && arrayNumbers[0] != undefined && arrayOperation[0] == undefined) {
 
             arrayNumbers = [];
-
-        } else {
-
-            numbersClicked.pop();
 
             display.removeChild(lastChild);
 
