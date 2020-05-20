@@ -2,11 +2,17 @@ window.alert("This calculator just do math operations with two numbers!! Welcome
 
 var display = document.querySelector(".display");
 
-var i = 0, equalClicked = 0, opCalc = null;
+var i = 0;
+var equalClicked = 0;
+var opCalc = null;
 
-var numberForOp = ""; arrayNumbers = [], arrayOperation = [];
+var numberForOp = "";
+var arrayNumbers = [];
+var arrayOperation = [];
+var opPreferenceIndex = [];
 
-var displayChildren = display.querySelectorAll(".display-element"), lastChild = displayChildren[displayChildren.length - 1];
+var displayChildren = display.querySelectorAll(".display-element");
+var lastChild = displayChildren[displayChildren.length - 1];
 
 // shows in display the number button value
 function showNumber(numValue) {
@@ -19,33 +25,45 @@ function showNumber(numValue) {
 
 }
 
+function removeAndAdd() {
+
+    if (numberForOp != "") {
+
+        for (i = 0; i < numberForOp.length; i++) {
+
+            displayChildren = display.querySelectorAll(".display-element");
+
+            lastChild = displayChildren[displayChildren.length - 1];
+
+            display.removeChild(lastChild);
+
+        }
+
+        arrayNumbers.push(Number(numberForOp));
+
+        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "</div>");
+
+        numberForOp = "";
+
+
+    } else { }
+
+}
 
 // shows in display the operation button value the realocation of the display divs
 function showOp(opValue) {
 
-    if (arrayOperation[0] == undefined && numberForOp != "") {
-
-        if (numberForOp != undefined) {
-
-            displayChildren = display.querySelectorAll(".display-number");
-
-            for (i = displayChildren.length - 1; i >= 0; i--) {
-
-                display.removeChild(displayChildren[i]);
-
-            }
-
-            arrayNumbers.push(Number(numberForOp));
-
-            display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numberForOp + "</div>");
-
-        }
-
-        numberForOp = "";
+    if (arrayNumbers.length > arrayOperation.length) {
 
         let storeValue = String(opValue.value);
 
         arrayOperation.push(storeValue);
+
+        if (storeValue == "/" || storeValue == "x") {
+
+            opPreferenceIndex.push(arrayOperation.length - 1);
+
+        }
 
         display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-op'>" + storeValue + "</div>");
 
@@ -58,41 +76,10 @@ function doOperation(equal) {
 
     let equalValue = String(equal.value);
 
-    if (numberForOp != undefined) {
+    if (arrayNumbers[0] != undefined && opCalc == null) {
 
-        displayChildren = display.querySelectorAll(".display-number");
+        for (i = 0; i < opPreferenceIndex.length; i++) {
 
-        for (i = displayChildren.length - 1; i > 0; i--) {
-
-            display.removeChild(displayChildren[i]);
-
-        }
-
-        arrayNumbers.push(Number(numberForOp));
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + numberForOp + "</div>");
-
-        numberForOp = "";
-
-    }
-
-    if (arrayOperation.length > 0 && arrayNumbers[1] != undefined && opCalc == null) {
-
-        switch (arrayOperation[0]) {
-            case "+":
-                opCalc = Number(arrayNumbers[0] + arrayNumbers[1]);
-                break;
-            case "x":
-                opCalc = Number(arrayNumbers[0] * arrayNumbers[1]);
-                break;
-            case "-":
-                opCalc = Number(arrayNumbers[0] - arrayNumbers[1]);
-                break;
-            case "/":
-                opCalc = Number(arrayNumbers[0] / arrayNumbers[1]);
-                break;
-            default:
-                break;
         }
 
         display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-equal'>" + equalValue + "</div>");
@@ -115,6 +102,7 @@ function checkDisplay() {
         numberForOp = "";
         arrayNumbers = [];
         arrayOperation = [];
+        opPreferenceIndex = [];
         opCalc = null;
 
         // removing display children
@@ -142,6 +130,7 @@ function cleanDisplay() {
     numberForOp = "";
     arrayNumbers = [];
     arrayOperation = [];
+    opPreferenceIndex = [];
     opCalc = null;
 
     // removing display children
@@ -167,27 +156,9 @@ function cleanLastChild() {
 
     lastChild = displayChildren[(displayChildren.length) - 1];
 
-    if (opCalc == null && lastChild != undefined) {
+    if (opCalc == null) {
 
-        if (numberForOp != undefined && arrayNumbers[0] == undefined && arrayOperation[0] == undefined) {
-
-            numberForOp = numberForOp.substr(0, (numberForOp.length - 1));
-
-            display.removeChild(lastChild);
-
-        } else if (numberForOp == "" && arrayNumbers[0] != undefined && arrayOperation[0] != undefined) {
-
-            arrayOperation = [];
-
-            display.removeChild(lastChild);
-
-        } else if (numberForOp == "" && arrayNumbers[0] != undefined && arrayOperation[0] == undefined) {
-
-            arrayNumbers = [];
-
-            display.removeChild(lastChild);
-
-        }
+        console.log("it isn't work, galado");
 
     } else {
 
