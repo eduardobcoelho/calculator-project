@@ -25,6 +25,7 @@ function showNumber(numValue) {
 
 }
 
+// remove of the display the last elements with the class "display-number" transform in just one element and append to the display
 function removeAndAdd() {
 
     if (numberForOp != "") {
@@ -218,9 +219,52 @@ function cleanLastChild() {
 
     lastChild = displayChildren[(displayChildren.length) - 1];
 
+    lastChildClasses = lastChild.classList;
+
     if (opCalc == 0) {
 
-        console.log("it isn't work, galado");
+        switch (lastChildClasses[lastChildClasses.length - 1]) {
+
+            case "display-op":
+
+                if (arrayOperation[arrayOperation.length - 1] == "x" || arrayOperation[arrayOperation.length - 1] == "/") {
+
+                    arrayOperation.pop();
+
+                    opPreferenceIndex.shift();
+
+                    display.removeChild(lastChild);
+
+                } else {
+
+                    arrayOperation.pop();
+
+                    display.removeChild(lastChild);
+
+                }
+
+                break;
+
+            case "display-number":
+
+                if (numberForOp != "") {
+                    ;
+
+                    display.removeChild(lastChild);
+
+                    numberForOp = numberForOp.slice(0, -1);
+
+                } else {
+
+                    arrayNumbers.pop();
+
+                    display.removeChild(lastChild);
+
+                }
+
+                break;
+
+        }
 
     } else {
 
@@ -229,5 +273,3 @@ function cleanLastChild() {
     }
 
 }
-
-// tests
