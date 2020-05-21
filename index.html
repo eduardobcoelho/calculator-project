@@ -1,10 +1,12 @@
+<!-- PROJECT STATUS: FINISHED -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculator</title>
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
@@ -43,17 +45,22 @@
 
             <div class="container-ops">
                 <div class="btn-op-conjunt">
-                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="sum" value="+">+</button>
-                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="subtraction" value="-">-</button>
-                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="multiplication" value="x">x</button>
-                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="division" value="/">/</button>
+                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="sum"
+                        value="+">+</button>
+                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style"
+                        id="subtraction" value="-">-</button>
+                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style"
+                        id="multiplication" value="x">x</button>
+                    <button onclick="checkDisplay();removeAndAdd();showOp(this)" class="btn-op btn-style" id="division"
+                        value="/">/</button>
                 </div>
                 <div class="btn-op-conjunt">
                     <button onclick="cleanLastChild()" class="btn-op btn-style btn-action" value="CE"
                         style="background-color: #5007ed; flex-basis: 20%;">CE</button>
                     <button onclick="cleanDisplay()" class="btn-op btn-style btn-action" value="C"
                         style="background-color: #5007ed; flex-basis: 20%;">C</button>
-                    <button onclick="checkDisplay();removeAndAdd();doOperation(this)" class="btn-op btn-style btn-action" value="="
+                    <button onclick="checkDisplay();removeAndAdd();doOperation(this)"
+                        class="btn-op btn-style btn-action" value="="
                         style="background-color: #e63819; flex-basis: 45%;">=</button>
                 </div>
             </div>

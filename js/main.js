@@ -1,4 +1,4 @@
-window.alert("This calculator just do math operations with two numbers!! Welcome and make a good use!!");
+// PROJECT STATUS: FINISHED //
 
 var display = document.querySelector(".display");
 

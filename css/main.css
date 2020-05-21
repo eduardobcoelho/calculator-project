@@ -1,4 +1,5 @@
-/* This CSS is just for structuring configurations of the page */ 
+/* PROJECT STATUS: FINISHED */
+/* This CSS is turned for structuring configurations of the page */
 
 * {
     margin: 0;
@@ -9,7 +10,6 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    background-color: transparent;
     justify-content: center;
     align-items: center;
 }
