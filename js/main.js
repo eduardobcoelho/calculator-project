@@ -4,7 +4,7 @@ var display = document.querySelector(".display");
 
 var i = 0;
 var equalClicked = 0;
-var opCalc = null;
+var opCalc = 0;
 
 var numberForOp = "";
 var arrayNumbers = [];
@@ -61,7 +61,7 @@ function showOp(opValue) {
 
         if (storeValue == "/" || storeValue == "x") {
 
-            opPreferenceIndex.push(arrayOperation.length - 1);
+            opPreferenceIndex.unshift(arrayOperation.length - 1);
 
         }
 
@@ -76,11 +76,73 @@ function doOperation(equal) {
 
     let equalValue = String(equal.value);
 
-    if (arrayNumbers[0] != undefined && opCalc == null) {
+    let numberToSave = 0;
 
-        for (i = 0; i < opPreferenceIndex.length; i++) {
+    if (arrayNumbers[0] != undefined && opCalc == 0 && arrayNumbers.length > arrayOperation.length) {
+
+        while (arrayOperation[0] != undefined) {
+
+            if (opPreferenceIndex[0] != undefined) {
+
+                switch (arrayOperation[opPreferenceIndex[0]]) {
+
+                    case "x":
+
+                        numberToSave = arrayNumbers[opPreferenceIndex[0]] * arrayNumbers[opPreferenceIndex[0] + 1];
+
+                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
+
+                        arrayOperation.splice(opPreferenceIndex[0], 1);
+
+                        opPreferenceIndex.shift()
+
+                        break;
+
+                    case "/":
+
+                        numberToSave = arrayNumbers[opPreferenceIndex[0]] / arrayNumbers[opPreferenceIndex[0] + 1];
+
+                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
+
+                        arrayOperation.splice(opPreferenceIndex[0], 1);
+
+                        opPreferenceIndex.shift()
+
+                        break;
+
+                }
+
+            } else {
+
+                switch (arrayOperation[0]) {
+
+                    case "+":
+
+                        numberToSave = arrayNumbers[0] + arrayNumbers[1];
+
+                        arrayNumbers.splice(0, 2, numberToSave);
+
+                        arrayOperation.shift();
+
+                        break;
+
+                    case "-":
+
+                        numberToSave = arrayNumbers[0] - arrayNumbers[1];
+
+                        arrayNumbers.splice(0, 2, numberToSave);
+
+                        arrayOperation.shift();
+
+                        break;
+
+                }
+
+            }
 
         }
+
+        opCalc = arrayNumbers[0];
 
         display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-equal'>" + equalValue + "</div>");
 
@@ -103,7 +165,7 @@ function checkDisplay() {
         arrayNumbers = [];
         arrayOperation = [];
         opPreferenceIndex = [];
-        opCalc = null;
+        opCalc = 0;
 
         // removing display children
 
@@ -131,7 +193,7 @@ function cleanDisplay() {
     arrayNumbers = [];
     arrayOperation = [];
     opPreferenceIndex = [];
-    opCalc = null;
+    opCalc = 0;
 
     // removing display children
 
@@ -156,7 +218,7 @@ function cleanLastChild() {
 
     lastChild = displayChildren[(displayChildren.length) - 1];
 
-    if (opCalc == null) {
+    if (opCalc == 0) {
 
         console.log("it isn't work, galado");
 
