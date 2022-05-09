@@ -1,275 +1,89 @@
-// PROJECT STATUS: FINISHED //
+const display = document.getElementById('display');
+const btnNumbersConjuntsValue = {
+  0: [1, 2, 3],
+  1: [4, 5, 6],
+  2: [7, 8, 9],
+  3: [0, '.'],
+};
+const btnOpsConjuntsValue = {
+  0: ['sum', 'subtraction', 'multiplication', 'division'],
+  1: ['CE', 'C', '='],
+};
 
-var display = document.querySelector(".display");
+renderBtnNumbersConjunts();
+renderBtnOpsConjunts();
 
-var i = 0;
-var equalClicked = 0;
-var opCalc = 0;
-
-var numberForOp = "";
-var arrayNumbers = [];
-var arrayOperation = [];
-var opPreferenceIndex = [];
-
-var displayChildren = display.querySelectorAll(".display-element");
-var lastChild = displayChildren[displayChildren.length - 1];
-
-// shows in display the number button value
-function showNumber(numValue) {
-
-    let storeValue = numValue.value;
-
-    numberForOp += storeValue;
-
-    display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + storeValue + "</div>");
-
+function renderBtnNumbersConjunts() {
+  const containerNumbers = document.getElementById('container-numbers');
+  const conjunts = getConjunts('btn-numbers-conjunt', 4);
+  conjunts.forEach((conjunt) => {
+    containerNumbers.appendChild(conjunt);
+  });
 }
 
-// remove of the display the last elements with the class "display-number" transform in just one element and append to the display
-function removeAndAdd() {
-
-    if (numberForOp != "") {
-
-        for (i = 0; i < numberForOp.length; i++) {
-
-            displayChildren = display.querySelectorAll(".display-element");
-
-            lastChild = displayChildren[displayChildren.length - 1];
-
-            display.removeChild(lastChild);
-
-        }
-
-        arrayNumbers.push(Number(numberForOp));
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "</div>");
-
-        numberForOp = "";
-
-
-    } else { }
-
+function renderBtnOpsConjunts() {
+  const containerOps = document.getElementById('container-ops');
+  const conjunts = getConjunts('btn-op-conjunt', 2);
+  conjunts.forEach((conjunt) => {
+    containerOps.appendChild(conjunt);
+  });
 }
 
-// shows in display the operation button value the realocation of the display divs
-function showOp(opValue) {
-
-    if (arrayNumbers.length > arrayOperation.length) {
-
-        let storeValue = String(opValue.value);
-
-        arrayOperation.push(storeValue);
-
-        if (storeValue == "/" || storeValue == "x") {
-
-            opPreferenceIndex.unshift(arrayOperation.length - 1);
-
-        }
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-op'>" + storeValue + "</div>");
-
-    } else { }
-
+function getConjunts(classType, quantity) {
+  const conjunts = createConjunts(classType, quantity);
+  conjunts.forEach((conjunt, i) => {
+    const conjuntValue =
+      classType === 'btn-numbers-conjunt'
+        ? btnNumbersConjuntsValue[i]
+        : btnOpsConjuntsValue[i];
+    conjuntValue.map((value) => {
+      const button = createBtn(
+        classType === 'btn-numbers-conjunt' ? 'btn-number' : 'btn-op',
+        value,
+      );
+      conjunt.appendChild(button);
+    });
+  });
+  return conjunts;
 }
 
-// do the calculation of the operation selected and the realocation of the display divs
-function doOperation(equal) {
-
-    let equalValue = String(equal.value);
-
-    let numberToSave = 0;
-
-    if (arrayNumbers[0] != undefined && opCalc == 0 && arrayNumbers.length > arrayOperation.length) {
-
-        while (arrayOperation[0] != undefined) {
-
-            if (opPreferenceIndex[0] != undefined) {
-
-                switch (arrayOperation[opPreferenceIndex[0]]) {
-
-                    case "x":
-
-                        numberToSave = arrayNumbers[opPreferenceIndex[0]] * arrayNumbers[opPreferenceIndex[0] + 1];
-
-                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
-
-                        arrayOperation.splice(opPreferenceIndex[0], 1);
-
-                        opPreferenceIndex.shift()
-
-                        break;
-
-                    case "/":
-
-                        numberToSave = arrayNumbers[opPreferenceIndex[0]] / arrayNumbers[opPreferenceIndex[0] + 1];
-
-                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
-
-                        arrayOperation.splice(opPreferenceIndex[0], 1);
-
-                        opPreferenceIndex.shift()
-
-                        break;
-
-                }
-
-            } else {
-
-                switch (arrayOperation[0]) {
-
-                    case "+":
-
-                        numberToSave = arrayNumbers[0] + arrayNumbers[1];
-
-                        arrayNumbers.splice(0, 2, numberToSave);
-
-                        arrayOperation.shift();
-
-                        break;
-
-                    case "-":
-
-                        numberToSave = arrayNumbers[0] - arrayNumbers[1];
-
-                        arrayNumbers.splice(0, 2, numberToSave);
-
-                        arrayOperation.shift();
-
-                        break;
-
-                }
-
-            }
-
-        }
-
-        opCalc = arrayNumbers[0];
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-equal'>" + equalValue + "</div>");
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-result'>" + opCalc + "</div>");
-
-        equalClicked += 1;
-
-    } else { }
-
+function createConjunts(classType, quantity) {
+  let conjunts = [];
+  for (let i = 0; i < quantity; i++) {
+    const div = document.createElement('div');
+    div.classList.add(classType);
+    conjunts.push(div);
+  }
+  return conjunts;
 }
 
-// checks if an operation has been done before start a new operation
-function checkDisplay() {
-
-    if (equalClicked > 0) {
-
-        // reseting
-
-        numberForOp = "";
-        arrayNumbers = [];
-        arrayOperation = [];
-        opPreferenceIndex = [];
-        opCalc = 0;
-
-        // removing display children
-
-        displayChildren = display.querySelectorAll(".display-element");
-
-        for (i = 0; i < displayChildren.length; i++) {
-
-            display.removeChild(displayChildren[i]);
-
-        }
-
-        // reseting
-        equalClicked = 0;
-
-    } else { }
-
+function createBtn(classType, value) {
+  const button = document.createElement('button');
+  button.classList.add(classType, 'btn-style');
+  const btnValue = getValueByExceptions(value);
+  button.value = btnValue;
+  button.textContent = btnValue;
+  button.style = getStyleByExceptions(value);
+  return button;
 }
 
-// clean all the display
-function cleanDisplay() {
-
-    // reseting
-
-    numberForOp = "";
-    arrayNumbers = [];
-    arrayOperation = [];
-    opPreferenceIndex = [];
-    opCalc = 0;
-
-    // removing display children
-
-    displayChildren = display.querySelectorAll(".display-element");
-
-    for (i = 0; i < displayChildren.length; i++) {
-
-        display.removeChild(displayChildren[i]);
-
-    }
-
-    // reseting
-
-    equalClicked = 0;
-
+function getValueByExceptions(value) {
+  const exceptions = {
+    sum: '+',
+    subtraction: '-',
+    multiplication: 'x',
+    division: '/',
+  };
+  return exceptions[value] || value;
 }
 
-// removes of the display the last number or operation clicked
-function cleanLastChild() {
-
-    displayChildren = display.querySelectorAll(".display-element");
-
-    lastChild = displayChildren[(displayChildren.length) - 1];
-
-    lastChildClasses = lastChild.classList;
-
-    if (opCalc == 0) {
-
-        switch (lastChildClasses[lastChildClasses.length - 1]) {
-
-            case "display-op":
-
-                if (arrayOperation[arrayOperation.length - 1] == "x" || arrayOperation[arrayOperation.length - 1] == "/") {
-
-                    arrayOperation.pop();
-
-                    opPreferenceIndex.shift();
-
-                    display.removeChild(lastChild);
-
-                } else {
-
-                    arrayOperation.pop();
-
-                    display.removeChild(lastChild);
-
-                }
-
-                break;
-
-            case "display-number":
-
-                if (numberForOp != "") {
-                    ;
-
-                    display.removeChild(lastChild);
-
-                    numberForOp = numberForOp.slice(0, -1);
-
-                } else {
-
-                    arrayNumbers.pop();
-
-                    display.removeChild(lastChild);
-
-                }
-
-                break;
-
-        }
-
-    } else {
-
-        cleanDisplay();
-
-    }
-
+function getStyleByExceptions(value) {
+  const exceptions = {
+    '0': 'width: 65%',
+    '.': 'width: 30%',
+    'CE': 'background-color: #5007ed; flex-basis: 20%',
+    'C': 'background-color: #5007ed; flex-basis: 20%',
+    '=': 'background-color: #e63819; flex-basis: 45%',
+  };
+  return exceptions[value] || '';
 }

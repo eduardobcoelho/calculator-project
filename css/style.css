@@ -1,66 +1,133 @@
 /* PROJECT STATUS: FINISHED */
-/* This CSS is turned to the layout design configuration */
 
 * {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #000;
-    border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  border-radius: 5px;
 }
 
 body {
-    background-image: url(../images/10-fatos-que-vocc3aa-precisa-saber-sobre-a-5.png);
-    background-size: 100vw auto;
+  background-image: url(../images/10-fatos-que-vocc3aa-precisa-saber-sobre-a-5.png);
+  background-size: 100vw auto;
 }
 
-.container-calculator {
-    background-color: lightgrey;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
+#wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(17, 17, 17, 0.45);
 }
 
-.wrapper {
-    background-color: rgba(17, 17, 17, 0.45);
+#container-calculator {
+  width: 350px;
+  height: 500px;
+  display: flex;
+  padding: 20px 30px;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  background-color: lightgrey;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
 }
 
-.display {
-    background-color: white;
-    box-shadow: 2px 2px 8px #000;
-    list-style-type: none;
+#display {
+  flex-basis: 100%;
+  height: 145px;
+  display: flex;
+  margin-bottom: 15px;
+  padding: 30px;
+  box-sizing: border-box;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: flex-end;
+  background-color: white;
+  box-shadow: 2px 2px 8px #000;
+  list-style-type: none;
 }
 
 .display-element {
-    font-size: 18px;
-    font-weight: 700;
-    font-style: normal;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .display-element-margin {
-    margin: 0px 5px;
+  margin: 0px 5px;
 }
 
 .clearfix {
-    border: 0.5px solid #747171;
+  width: 100%;
+  display: block;
+  border: 0.5px solid #747171;
+}
+
+#container-numbers {
+  flex-grow: 3;
+  height: 300px;
+  display: flex;
+  box-sizing: border-box;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.btn-numbers-conjunt {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  margin-top: 15px;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.btn-number {
+  width: 30%;
+}
+
+.btn-op-conjunt {
+  flex-basis: 45%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
+
+#container-ops {
+  flex-grow: 2;
+  height: 300px;
+  display: flex;
+  margin-left: 10px;
+  box-sizing: border-box;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
 .btn-op {
-    font-size: 20px;
+  flex-grow: 1;
+  margin-top: 15px;
+  font-size: 20px;
 }
 
 .btn-style {
-    background-color: #fff;
-    border: 0;
-    box-shadow: 2px 2px 6px #000; 
-    transition: all 0.3s ease;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 2px 2px 6px #000;
+  transition: all 0.3s ease;
 }
 
 .btn-action {
-    color: #fff; 
-    font-size: 20px;
+  color: #fff;
+  font-size: 20px;
 }
 
-.btn-style:hover{
-    box-shadow: 6px 6px 15px #000;
-    border-radius: 12px;
+.btn-style:hover {
+  box-shadow: 6px 6px 15px #000;
+  border-radius: 12px;
 }
