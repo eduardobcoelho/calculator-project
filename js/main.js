@@ -60,11 +60,17 @@ function createConjunts(classType, quantity) {
 function createBtn(classType, value) {
   const button = document.createElement('button');
   button.classList.add(classType, 'btn-style');
+  isBtnAction(value) ? button.classList.add('btn-action') : '';
   const btnValue = getValueByExceptions(value);
   button.value = btnValue;
   button.textContent = btnValue;
   button.style = getStyleByExceptions(value);
   return button;
+}
+
+function isBtnAction(value) {
+  const actions = ['CE', 'C', '='];
+  return actions.includes(value);
 }
 
 function getValueByExceptions(value) {
