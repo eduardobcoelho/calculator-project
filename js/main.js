@@ -20,8 +20,8 @@ function addButtonsClickListener() {
 
 function displayNumber({ target }) {
   const value = target.value;
-  const isOperation = operations.includes(value);
   const isAction = actions.includes(value);
+  const isOperation = operations.includes(value);
   if (isAction) {
     doAction(value);
   } else {
@@ -30,7 +30,7 @@ function displayNumber({ target }) {
       numbers[currentNumber] += `${value}`;
     } else if (isOperation && !currentOperation) {
       currentOperation = value;
-      currentNumber++;
+      currentNumber = 1;
     } else if (isOperation && currentOperation) {
       doOperation(value);
     }
@@ -40,11 +40,11 @@ function displayNumber({ target }) {
 function doOperation(opValue) {
   const newValue = doCalc();
   currentOperation = opValue;
-  currentNumber = 1;
+  currentNumber = opValue ? 1 : 0;
   numbers[0] = String(newValue);
   numbers[1] = '';
   display.innerText = '';
-  display.innerText += `${newValue}${currentOperation}`;
+  display.innerText += `${newValue}${opValue ? opValue : ''}`;
 }
 
 function doCalc() {
@@ -75,8 +75,15 @@ function doAction(action) {
       resetCalculator();
       break;
     case '=':
+      equalClicked();
       break;
   }
+}
+
+function equalClicked() {
+  numbers[0] && numbers[1]
+    ? doOperation(null)
+    : window.alert('Não é possível gerar o resultado com os dados fornecidos!');
 }
 
 function removeLastChar() {
@@ -97,9 +104,9 @@ function removeLastChar() {
 }
 
 function resetCalculator() {
-  numbers[0] = '';
-  numbers[1] = '';
+  display.innerText = '';
   currentOperation = null;
   currentNumber = 0;
-  display.innerText = '';
+  numbers[0] = '';
+  numbers[1] = '';
 }
