@@ -1,4 +1,3 @@
-const display = document.getElementById('display');
 const btnNumbersConjuntsValue = {
   0: [1, 2, 3],
   1: [4, 5, 6],
