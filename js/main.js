@@ -37,6 +37,20 @@ function displayNumber({ target }) {
   }
 }
 
+function doAction(action) {
+  switch (action) {
+    case 'CE':
+      removeLastChar();
+      break;
+    case 'C':
+      resetCalculator();
+      break;
+    case '=':
+      equalClicked();
+      break;
+  }
+}
+
 function doOperation(opValue) {
   const newValue = doCalc();
   currentOperation = opValue;
@@ -66,20 +80,6 @@ function doCalc() {
   return newValue;
 }
 
-function doAction(action) {
-  switch (action) {
-    case 'CE':
-      // removeLastChar();
-      break;
-    case 'C':
-      resetCalculator();
-      break;
-    case '=':
-      equalClicked();
-      break;
-  }
-}
-
 function equalClicked() {
   numbers[0] && numbers[1]
     ? doOperation(null)
@@ -94,13 +94,13 @@ function removeLastChar() {
     currentOperation = null;
     display.innerText = displayText.replace(char, '');
   } else {
+    if (!numbers[currentNumber] && currentNumber === 1) currentNumber = 0;
     display.innerText = displayText.slice(0, displayText.length - 1);
     numbers[currentNumber] = numbers[currentNumber].slice(
       0,
       numbers[currentNumber].length - 1,
     );
   }
-  console.log('numbers: ', numbers);
 }
 
 function resetCalculator() {
