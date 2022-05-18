@@ -1,4 +1,2 @@
 # calculator-project
-A simple calculator with the basic operations.
-
-PROJECT STATUS: FINISHED.
+Calculadora com as operações básicas para exercitar funcionalidades básicas do JavaScript.
