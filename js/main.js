@@ -53,12 +53,17 @@ function doAction(action) {
 
 function doOperation(opValue) {
   const newValue = doCalc();
-  currentOperation = opValue;
-  currentNumber = opValue ? 1 : 0;
-  numbers[0] = String(newValue);
-  numbers[1] = '';
-  display.innerText = '';
-  display.innerText += `${newValue}${opValue ? opValue : ''}`;
+  if(isNaN(newValue)) {
+    window.alert('Não foi possível gerar resultados. Verifique se os números foram digitados corretamente!')
+    resetCalculator()
+  } else {
+    currentOperation = opValue;
+    currentNumber = opValue ? 1 : 0;
+    numbers[0] = String(newValue);
+    numbers[1] = '';
+    display.innerText = '';
+    display.innerText += `${newValue}${opValue ? opValue : ''}`;
+  }
 }
 
 function doCalc() {
