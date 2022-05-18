@@ -1,275 +1,117 @@
-// PROJECT STATUS: FINISHED //
+const display = document.getElementById('display');
+const buttons = document.getElementsByTagName('button');
+const operations = ['+', '-', 'x', '/'];
+const actions = ['CE', 'C', '='];
+const numbers = {
+  0: '',
+  1: '',
+};
+let currentOperation = null;
+let currentNumber = 0;
 
-var display = document.querySelector(".display");
+addButtonsClickListener();
 
-var i = 0;
-var equalClicked = 0;
-var opCalc = 0;
-
-var numberForOp = "";
-var arrayNumbers = [];
-var arrayOperation = [];
-var opPreferenceIndex = [];
-
-var displayChildren = display.querySelectorAll(".display-element");
-var lastChild = displayChildren[displayChildren.length - 1];
-
-// shows in display the number button value
-function showNumber(numValue) {
-
-    let storeValue = numValue.value;
-
-    numberForOp += storeValue;
-
-    display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + storeValue + "</div>");
-
+function addButtonsClickListener() {
+  for (let i = 0; i < buttons.length; i++) {
+    const button = buttons[i];
+    button.addEventListener('click', displayNumber);
+  }
 }
 
-// remove of the display the last elements with the class "display-number" transform in just one element and append to the display
-function removeAndAdd() {
-
-    if (numberForOp != "") {
-
-        for (i = 0; i < numberForOp.length; i++) {
-
-            displayChildren = display.querySelectorAll(".display-element");
-
-            lastChild = displayChildren[displayChildren.length - 1];
-
-            display.removeChild(lastChild);
-
-        }
-
-        arrayNumbers.push(Number(numberForOp));
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-number'>" + arrayNumbers[arrayNumbers.length - 1] + "</div>");
-
-        numberForOp = "";
-
-
-    } else { }
-
-}
-
-// shows in display the operation button value the realocation of the display divs
-function showOp(opValue) {
-
-    if (arrayNumbers.length > arrayOperation.length) {
-
-        let storeValue = String(opValue.value);
-
-        arrayOperation.push(storeValue);
-
-        if (storeValue == "/" || storeValue == "x") {
-
-            opPreferenceIndex.unshift(arrayOperation.length - 1);
-
-        }
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-op'>" + storeValue + "</div>");
-
-    } else { }
-
-}
-
-// do the calculation of the operation selected and the realocation of the display divs
-function doOperation(equal) {
-
-    let equalValue = String(equal.value);
-
-    let numberToSave = 0;
-
-    if (arrayNumbers[0] != undefined && opCalc == 0 && arrayNumbers.length > arrayOperation.length) {
-
-        while (arrayOperation[0] != undefined) {
-
-            if (opPreferenceIndex[0] != undefined) {
-
-                switch (arrayOperation[opPreferenceIndex[0]]) {
-
-                    case "x":
-
-                        numberToSave = arrayNumbers[opPreferenceIndex[0]] * arrayNumbers[opPreferenceIndex[0] + 1];
-
-                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
-
-                        arrayOperation.splice(opPreferenceIndex[0], 1);
-
-                        opPreferenceIndex.shift()
-
-                        break;
-
-                    case "/":
-
-                        numberToSave = arrayNumbers[opPreferenceIndex[0]] / arrayNumbers[opPreferenceIndex[0] + 1];
-
-                        arrayNumbers.splice(opPreferenceIndex[0], 2, numberToSave);
-
-                        arrayOperation.splice(opPreferenceIndex[0], 1);
-
-                        opPreferenceIndex.shift()
-
-                        break;
-
-                }
-
-            } else {
-
-                switch (arrayOperation[0]) {
-
-                    case "+":
-
-                        numberToSave = arrayNumbers[0] + arrayNumbers[1];
-
-                        arrayNumbers.splice(0, 2, numberToSave);
-
-                        arrayOperation.shift();
-
-                        break;
-
-                    case "-":
-
-                        numberToSave = arrayNumbers[0] - arrayNumbers[1];
-
-                        arrayNumbers.splice(0, 2, numberToSave);
-
-                        arrayOperation.shift();
-
-                        break;
-
-                }
-
-            }
-
-        }
-
-        opCalc = arrayNumbers[0];
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-element-margin display-equal'>" + equalValue + "</div>");
-
-        display.insertAdjacentHTML("beforeend", "<div class='display-element display-result'>" + opCalc + "</div>");
-
-        equalClicked += 1;
-
-    } else { }
-
-}
-
-// checks if an operation has been done before start a new operation
-function checkDisplay() {
-
-    if (equalClicked > 0) {
-
-        // reseting
-
-        numberForOp = "";
-        arrayNumbers = [];
-        arrayOperation = [];
-        opPreferenceIndex = [];
-        opCalc = 0;
-
-        // removing display children
-
-        displayChildren = display.querySelectorAll(".display-element");
-
-        for (i = 0; i < displayChildren.length; i++) {
-
-            display.removeChild(displayChildren[i]);
-
-        }
-
-        // reseting
-        equalClicked = 0;
-
-    } else { }
-
-}
-
-// clean all the display
-function cleanDisplay() {
-
-    // reseting
-
-    numberForOp = "";
-    arrayNumbers = [];
-    arrayOperation = [];
-    opPreferenceIndex = [];
-    opCalc = 0;
-
-    // removing display children
-
-    displayChildren = display.querySelectorAll(".display-element");
-
-    for (i = 0; i < displayChildren.length; i++) {
-
-        display.removeChild(displayChildren[i]);
-
+function displayNumber({ target }) {
+  const value = target.value;
+  const isAction = actions.includes(value);
+  const isOperation = operations.includes(value);
+  if (isAction) {
+    doAction(value);
+  } else {
+    display.innerText += `${value}`;
+    if (!isOperation) {
+      numbers[currentNumber] += `${value}`;
+    } else if (isOperation && !currentOperation) {
+      currentOperation = value;
+      currentNumber = 1;
+    } else if (isOperation && currentOperation) {
+      doOperation(value);
     }
-
-    // reseting
-
-    equalClicked = 0;
-
+  }
 }
 
-// removes of the display the last number or operation clicked
-function cleanLastChild() {
+function doAction(action) {
+  switch (action) {
+    case 'CE':
+      removeLastChar();
+      break;
+    case 'C':
+      resetCalculator();
+      break;
+    case '=':
+      equalClicked();
+      break;
+  }
+}
 
-    displayChildren = display.querySelectorAll(".display-element");
+function doOperation(opValue) {
+  const newValue = doCalc();
+  if(isNaN(newValue)) {
+    window.alert('Não foi possível gerar resultados. Verifique se os números foram digitados corretamente!')
+    resetCalculator()
+  } else {
+    currentOperation = opValue;
+    currentNumber = opValue ? 1 : 0;
+    numbers[0] = String(newValue);
+    numbers[1] = '';
+    display.innerText = '';
+    display.innerText += `${newValue}${opValue ? opValue : ''}`;
+  }
+}
 
-    lastChild = displayChildren[(displayChildren.length) - 1];
+function doCalc() {
+  let newValue = null;
+  switch (currentOperation) {
+    case '+':
+      newValue = Number(numbers[0]) + Number(numbers[1]);
+      break;
+    case '-':
+      newValue = Number(numbers[0]) - Number(numbers[1]);
+      break;
+    case 'x':
+      newValue = Number(numbers[0]) * Number(numbers[1]);
+      break;
+    case '/':
+      newValue = Number(numbers[0]) / Number(numbers[1]);
+      break;
+  }
+  return newValue;
+}
 
-    lastChildClasses = lastChild.classList;
+function equalClicked() {
+  numbers[0] && numbers[1]
+    ? doOperation(null)
+    : window.alert('Não é possível gerar o resultado com os dados fornecidos!');
+}
 
-    if (opCalc == 0) {
+function removeLastChar() {
+  const displayText = display.innerText;
+  const char = displayText[displayText.length - 1];
+  const isOperation = operations.includes(char);
+  if (isOperation) {
+    currentOperation = null;
+    display.innerText = displayText.replace(char, '');
+  } else {
+    if (!numbers[currentNumber] && currentNumber === 1) currentNumber = 0;
+    display.innerText = displayText.slice(0, displayText.length - 1);
+    numbers[currentNumber] = numbers[currentNumber].slice(
+      0,
+      numbers[currentNumber].length - 1,
+    );
+  }
+}
 
-        switch (lastChildClasses[lastChildClasses.length - 1]) {
-
-            case "display-op":
-
-                if (arrayOperation[arrayOperation.length - 1] == "x" || arrayOperation[arrayOperation.length - 1] == "/") {
-
-                    arrayOperation.pop();
-
-                    opPreferenceIndex.shift();
-
-                    display.removeChild(lastChild);
-
-                } else {
-
-                    arrayOperation.pop();
-
-                    display.removeChild(lastChild);
-
-                }
-
-                break;
-
-            case "display-number":
-
-                if (numberForOp != "") {
-                    ;
-
-                    display.removeChild(lastChild);
-
-                    numberForOp = numberForOp.slice(0, -1);
-
-                } else {
-
-                    arrayNumbers.pop();
-
-                    display.removeChild(lastChild);
-
-                }
-
-                break;
-
-        }
-
-    } else {
-
-        cleanDisplay();
-
-    }
-
+function resetCalculator() {
+  display.innerText = '';
+  currentOperation = null;
+  currentNumber = 0;
+  numbers[0] = '';
+  numbers[1] = '';
 }
